@@ -1,11 +1,9 @@
-@import "./base/variables";
-@import "bootstrap/scss/bootstrap";
-
-@import "./base/mixins";
-@import "./base/typography";
-
+@use "./base/variables" as *;
+@use "./base/mixins" as *;
+@use "./base/typography" as *;
 
 body {
   font-family: $font-family-base;
-  background-color: $body-bg;
+  background-color: $color-neutral-1;
+  color: $color-text;
 }

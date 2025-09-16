@@ -1,18 +1,8 @@
-import { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Tooltip } from 'bootstrap';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Layout from './components/layout';
 import Home from './pages/Home.tsx';
 
-function App() {
-
-    useEffect(() => {
-        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
-        tooltipTriggerList.forEach((tooltipTriggerEl) => {
-            new Tooltip(tooltipTriggerEl);
-        });
-    }, []);
-
+function App(): React.JSX.Element {
   return (
       <Router>
           <Routes>
