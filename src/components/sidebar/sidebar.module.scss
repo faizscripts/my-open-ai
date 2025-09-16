@@ -1,0 +1,110 @@
+@use '../../styles/base/variables.scss';
+@use '../../styles/base/mixins.scss';
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  padding: 1rem;
+  background-color: variables.$color-neutral-4;
+  border-right: 2px solid variables.$color-neutral-3;
+  transition: width 0.4s ease;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+
+  @media (min-width: 768px) {
+    position: relative;
+    flex-shrink: 0;
+  }
+}
+
+.open {
+  width: 240px;
+}
+
+.closed {
+  width: 60px;
+
+  @media (max-width: 768px) {
+    transform: translateX(-100%);
+  }
+}
+
+.backdrop {
+  display: none;
+
+  @media (max-width: 768px) {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+  }
+}
+
+.toggleButton {
+  display: block;
+  margin: 1rem 1rem 0.5rem 0;
+  color: variables.$color-text;
+  @include mixins.hover-effect('color', variables.$color-secondary-hover);
+
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.newChat {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  margin: 2rem 0;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  @include mixins.hover-effect('background-color', variables.$color-secondary-hover);
+  @include mixins.hover-effect('color', variables.$color-neutral-1);
+}
+
+.iconOnly {
+  gap: 0;
+  padding: 0.1rem;
+}
+
+.chatList {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  flex: 1;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.chatItem {
+  margin: 0.5rem 0;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  @include mixins.hover-effect('background-color', variables.$color-secondary-hover);
+  @include mixins.hover-effect('color', variables.$color-neutral-1);
+}
+
+.sidebar span,
+.sidebar h5,
+.sidebar .chatList {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  transition-delay: 0s;
+}
+
+.open span,
+.open h5,
+.open .chatList {
+  opacity: 1;
+  transition-delay: 0.2s;
+}

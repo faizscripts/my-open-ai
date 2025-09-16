@@ -1,0 +1,8 @@
+@mixin hover-effect($property: background-color, $hover-color) {
+  &:hover {
+    #{$property}: $hover-color;
+    cursor: pointer;
+    opacity: 0.9;
+    transition: $property 0.5s ease, opacity 0.5s ease;
+  }
+}
