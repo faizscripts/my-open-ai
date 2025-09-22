@@ -22,11 +22,11 @@
 }
 
 .open {
-  width: 240px;
+  width: var(--sidebar-width);
 }
 
 .closed {
-  width: 60px;
+  width: var(--sidebar-width);
 
   @media (max-width: 768px) {
     transform: translateX(-100%);

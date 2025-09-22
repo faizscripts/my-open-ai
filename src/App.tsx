@@ -6,12 +6,12 @@ function App(): React.JSX.Element {
   return (
       <Router>
           <Routes>
-              <Route path="/" element={<Layout />}>
-                  <Route index element={<Home />} />
+              <Route path="/" element={ <Layout /> }>
+                  <Route index element={ <Home /> } />
               </Route>
           </Routes>
       </Router>
-  )
+  );
 }
 
-export default App
+export default App;

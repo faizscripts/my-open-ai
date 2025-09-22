@@ -1,0 +1,16 @@
+.layout {
+  display: flex;
+}
+
+.mainContent {
+  flex: 1;
+  height: 100vh;
+}
+
+.open {
+  --sidebar-width: 240px;
+}
+
+.closed {
+  --sidebar-width: 60px;
+}
