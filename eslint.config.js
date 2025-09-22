@@ -93,6 +93,10 @@ export default tseslint.config([
       ],
       'react/react-in-jsx-scope': 'off',
       'react/prop-types': 'off',
+      "semi": ["error", "always"],
+      "object-curly-spacing": ["error", "always"],
+      "react/jsx-curly-spacing": ["error", {"when": "always", "children": true}],
+      "react/jsx-tag-spacing": ["error", {"beforeSelfClosing": "always"}],
     },
   },
 ])

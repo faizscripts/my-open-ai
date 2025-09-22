@@ -1,0 +1,27 @@
+.navContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.logo {
+  height: clamp(50px, 8vw, 75px);
+  width: clamp(50px, 8vw, 75px);
+}
+
+.heading {
+  font-size: clamp(1.5rem, 2vw + 1rem, 2rem);
+  font-weight: bolder;
+
+  @media (max-width: 768px) {
+    font-weight: bold;
+  }
+}
+
+.mobileMenu {
+  margin: 1rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
