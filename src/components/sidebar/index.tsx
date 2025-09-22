@@ -30,7 +30,7 @@ export default function Sidebar({ isSidebarOpen, sidebarToggle }: {isSidebarOpen
         <>
             { isSidebarOpen && <div className={ styles.backdrop } onClick={ sidebarToggle }></div> }
 
-            <div className={ `${styles.sidebar} ${isSidebarOpen ? styles.open : styles.closed}` }>
+            <div className={ `${styles.wrapper} ${isSidebarOpen ? styles.open : styles.closed}` }>
                 <ToggleIcon
                     className={ styles.toggleButton }
                     data-bs-toggle="tooltip"

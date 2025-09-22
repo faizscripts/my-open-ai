@@ -1,5 +1,5 @@
 import { useOutletContext } from 'react-router-dom';
-import Navbar from '../components/navbar/navbar.tsx';
+import Hero from '../components/hero';
 
 type LayoutContext = {
     sidebarToggle: () => void
@@ -11,9 +11,6 @@ export default function Home(): React.JSX.Element {
     const sidebarToggle: () => void = outletContext.sidebarToggle;
 
     return(
-        <>
-            <Navbar sidebarToggle={ sidebarToggle } />
-            Home page
-        </>
+        <Hero sidebarToggle={ sidebarToggle } />
     );
 }

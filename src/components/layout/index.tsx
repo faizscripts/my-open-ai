@@ -9,10 +9,10 @@ export default function Layout(): React.JSX.Element {
     const sidebarToggle = (): void => setIsSidebarOpen((previousState: boolean): boolean => !previousState);
 
     return(
-        <div className={ `${styles.layout} ${isSidebarOpen ? styles.open : styles.closed}` }>
+        <div className={ `${styles.wrapper} ${isSidebarOpen ? styles.open : styles.closed}` }>
             <Sidebar isSidebarOpen={ isSidebarOpen } sidebarToggle={ sidebarToggle } />
             <div  className={ styles.mainContent }>
-                <main className="container">
+                <main>
                     <Outlet context={ { sidebarToggle: sidebarToggle } } />
                 </main>
             </div>
