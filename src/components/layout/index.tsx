@@ -12,9 +12,7 @@ export default function Layout(): React.JSX.Element {
         <div className={ `${styles.wrapper} ${isSidebarOpen ? styles.open : styles.closed}` }>
             <Sidebar isSidebarOpen={ isSidebarOpen } sidebarToggle={ sidebarToggle } />
             <div  className={ styles.mainContent }>
-                <main>
-                    <Outlet context={ { sidebarToggle: sidebarToggle } } />
-                </main>
+                <Outlet context={ { sidebarToggle: sidebarToggle } } />
             </div>
         </div>
     );

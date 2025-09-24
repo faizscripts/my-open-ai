@@ -1,0 +1,10 @@
+@use '../../styles/base/variables.scss';
+
+.wrapper {
+  border-color: variables.$color-primary;
+
+  &:focus {
+    border-color: variables.$color-secondary-hover;
+    box-shadow: 0 0 0 0.25rem variables.$color-secondary-hover;
+  }
+}

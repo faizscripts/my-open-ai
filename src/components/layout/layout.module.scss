@@ -1,10 +1,12 @@
+@use "../../styles/base/mixins.scss";
+
 .wrapper {
   display: flex;
 }
 
 .mainContent {
-  flex: 1;
   height: 100vh;
+  @include mixins.full-height-flex;
 }
 
 .open {

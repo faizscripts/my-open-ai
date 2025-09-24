@@ -1,5 +1,6 @@
 import styles from './hero.module.scss';
-import EmptyChat from '../empty-chat';
+// import EmptyChat from '../empty-chat';
+import ChatPage from '../chat-page';
 import Navbar from '../navbar';
 
 export default function Hero ({ sidebarToggle }: {sidebarToggle: () => void}): React.JSX.Element {
@@ -7,7 +8,8 @@ export default function Hero ({ sidebarToggle }: {sidebarToggle: () => void}): R
         <div className={ styles.wrapper }>
             <Navbar sidebarToggle={ sidebarToggle } />
             <div className={ styles.main }>
-                <EmptyChat />
+                { /*<EmptyChat />*/ }
+                <ChatPage />
             </div>
         </div>
     );

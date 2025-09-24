@@ -1,0 +1,27 @@
+@use "../../styles/base/variables";
+
+.message {
+  max-width: 70%;
+  padding: 0.75rem 1rem;
+  border-radius: 16px;
+  font-size: 0.95rem;
+  line-height: 1.5;
+
+  @media (max-width: 768px) {
+    max-width: 100%;
+  }
+}
+
+.user {
+  align-self: flex-end;
+  background: variables.$color-primary;
+  color: variables.$color-neutral-1;
+  border-bottom-right-radius: 4px;
+}
+
+.assistant {
+  align-self: flex-start;
+  background: variables.$color-neutral-4;
+  color: variables.$color-text;
+  border-bottom-left-radius: 4px;
+}
