@@ -1,11 +1,15 @@
 @use '../../styles/base/mixins';
+@use '../../styles/base/variables';
 
-$logo-size: clamp(50px, 8vw, 75px);
+$logo-size: clamp(25px, 8vw, 35px);
 
 .wrapper {
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 1rem;
+  padding: 0.5rem;
+  border-bottom: 2px solid variables.$color-neutral-3;
 }
 
 .logo {
@@ -18,8 +22,13 @@ $logo-size: clamp(50px, 8vw, 75px);
 }
 
 .mobileMenu {
-  margin: 1rem;
-  position: absolute;
-  top: 0;
-  left: 0;
+  display: none;
+
+  @media (max-width: 768px) {
+    display: block;
+    margin: 1rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
 }

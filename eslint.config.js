@@ -97,6 +97,7 @@ export default tseslint.config([
       "object-curly-spacing": ["error", "always"],
       "react/jsx-curly-spacing": ["error", {"when": "always", "children": true}],
       "react/jsx-tag-spacing": ["error", {"beforeSelfClosing": "always"}],
+      "no-console": ["error", { allow: ["warn", "error", "info"] }],
     },
   },
 ])

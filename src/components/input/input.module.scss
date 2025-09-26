@@ -1,10 +1,54 @@
 @use '../../styles/base/variables.scss';
 
 .wrapper {
-  border-color: variables.$color-primary;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 0.75rem 1rem 0.75rem;
+  width: 100%;
+}
+
+.inputField {
+  flex: 1;
+  resize: none;
+  overflow: hidden;
+  border: 1px solid variables.$color-primary;
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  font-size: 1rem;
+  line-height: 1.4;
+  max-height: 10rem;
+  transition: all 0.2s ease;
+  outline: none;
+  color: variables.$color-text;
+  background: variables.$color-neutral-1;
 
   &:focus {
-    border-color: variables.$color-secondary-hover;
-    box-shadow: 0 0 0 0.25rem variables.$color-secondary-hover;
+    border-color: variables.$color-primary-hover;
+    box-shadow: 0 0 0 2px rgba(variables.$color-primary, 0.25);
+  }
+}
+
+.submitButton {
+  background: variables.$color-secondary;
+  color: variables.$color-neutral-1;
+  padding: 0.5rem;
+  border-radius: 8px;
+  font-weight: bolder;
+  cursor: pointer;
+  border: none;
+  transition: background 0.2s ease;
+
+  &:hover {
+    background: variables.$color-secondary-hover;
+  }
+
+  &:active {
+    background: variables.$color-secondary-active;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    background: variables.$color-secondary;
   }
 }
