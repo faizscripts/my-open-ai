@@ -49,7 +49,7 @@ export default tseslint.config([
           variableDeclaration: false,
           variableDeclarationIgnoreFunction: true,
           arrayDestructuring: false,
-          objectDestructuring: true,
+          objectDestructuring: false,
         },
       ],
       '@typescript-eslint/explicit-function-return-type': [

@@ -1,9 +1,11 @@
 import { type ChangeEvent, useEffect, useRef, useState } from 'react';
 import { SendHorizontal } from 'lucide-react';
 import styles from './input.module.scss';
-import type { BaseSendProps } from '../../interfaces';
+import { useAppContext } from '../../context/AppContext.tsx';
 
-export default function Input ({ onSend, loading }: BaseSendProps): React.JSX.Element {
+export default function Input (): React.JSX.Element {
+
+    const { loading, onSubmitMessage } = useAppContext();
 
     const [input, setInput] = useState('');
     const textareaRef = useRef<HTMLTextAreaElement | null>(null);
@@ -22,10 +24,9 @@ export default function Input ({ onSend, loading }: BaseSendProps): React.JSX.El
         }
     }, [loading]);
 
-
     const handleSend = (): void => {
         if (input.trim()) {
-            onSend(input);
+            onSubmitMessage(input);
             setInput('');
         }
     };

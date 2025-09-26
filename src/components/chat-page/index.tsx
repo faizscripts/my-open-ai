@@ -1,10 +1,13 @@
 import Input from '../input';
 import styles from './chat-page.module.scss';
+import { useAppContext } from '../../context/AppContext.tsx';
 import MessageBubble from '../message-bubble';
-import type { ChatPageProps } from '../../interfaces';
 import type { Message } from '../../types';
 
-export default function ChatPage ({ onSend, loading, messages }: ChatPageProps): React.JSX.Element {
+export default function ChatPage (): React.JSX.Element {
+    
+    const { loading, messages } = useAppContext();
+    
     return (
         <div className={ styles.wrapper }>
             <div className={ styles.chats }>
@@ -16,7 +19,7 @@ export default function ChatPage ({ onSend, loading, messages }: ChatPageProps):
                 </div>
             </div>
             <div className={ styles.inputWrapper }>
-                <Input onSend={ onSend } loading={ loading } />
+                <Input />
             </div>
         </div>
     );

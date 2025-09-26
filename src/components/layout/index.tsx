@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { Outlet } from 'react-router-dom';
 import Sidebar from '../sidebar';
 import styles from './layout.module.scss';
+import Home from '../home';
 
 export default function Layout(): React.JSX.Element {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -12,7 +12,7 @@ export default function Layout(): React.JSX.Element {
         <div className={ `${styles.wrapper} ${isSidebarOpen ? styles.open : styles.closed}` }>
             <Sidebar isSidebarOpen={ isSidebarOpen } sidebarToggle={ sidebarToggle } />
             <div  className={ styles.mainContent }>
-                <Outlet context={ { sidebarToggle: sidebarToggle } } />
+                <Home sidebarToggle={ sidebarToggle } />
             </div>
         </div>
     );

@@ -1,10 +1,12 @@
-import type { Message, OnSend } from '../types';
+import type { Message } from '../types';
 
-export interface BaseSendProps {
-    onSend: OnSend;
+export interface AppContextInterface {
+    messages: Message[];
     loading: boolean;
+    onSubmitMessage: (userText: string) => Promise<void>;
 }
 
-export interface ChatPageProps extends BaseSendProps {
-    messages: Message[];
+export interface SidebarProps {
+    isSidebarOpen: boolean;
+    sidebarToggle: () => void;
 }

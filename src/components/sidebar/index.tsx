@@ -1,8 +1,12 @@
 import { MoveLeft, MoveRight, Plus } from 'lucide-react';
 import styles from './sidebar.module.scss';
+import { useAppContext } from '../../context/AppContext.tsx';
 import { useBootstrapTooltip } from '../../hooks/useBootstrapTooltip.ts';
+import type { SidebarProps } from '../../interfaces';
 
-export default function Sidebar({ isSidebarOpen, sidebarToggle }: {isSidebarOpen: boolean, sidebarToggle: () => void}): React.JSX.Element {
+export default function Sidebar({ isSidebarOpen, sidebarToggle }: SidebarProps): React.JSX.Element {
+    
+    const { messages } = useAppContext();
 
     useBootstrapTooltip([isSidebarOpen]);
 
@@ -41,7 +45,7 @@ export default function Sidebar({ isSidebarOpen, sidebarToggle }: {isSidebarOpen
 
                 { newChatButton() }
 
-                { isSidebarOpen &&
+                { isSidebarOpen && messages.length > 0 &&
                 <>
                     <h5 className="text-muted">Chats</h5>
                     <ul className={ styles.chatList }>
