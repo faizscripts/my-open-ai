@@ -6,13 +6,13 @@ import Navbar from '../navbar';
 
 export default function Home ({ sidebarToggle }: {sidebarToggle: () => void}): React.JSX.Element {
     
-    const { messages } = useAppContext();
+    const { activeThread } = useAppContext();
 
     return(
         <div className={ styles.wrapper }>
             <Navbar sidebarToggle={ sidebarToggle } />
             <div className={ styles.main }>
-                { messages.length === 0 ? (
+                { !activeThread || activeThread.messages.length === 0 ? (
                     <EmptyChat />
                 ) : (
                     <ChatPage />

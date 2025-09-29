@@ -6,16 +6,16 @@ import type { Message } from '../../types';
 
 export default function ChatPage (): React.JSX.Element {
     
-    const { loading, messages } = useAppContext();
+    const { activeThread } = useAppContext();
     
     return (
         <div className={ styles.wrapper }>
             <div className={ styles.chats }>
                 <div className={ styles.messagesWrapper }>
-                    { messages.map((message: Message, i: number) => (
-                        <MessageBubble key={ i } message={ message } />
+                    { activeThread?.messages.map((message: Message, index: number) => (
+                        <MessageBubble key={ index } message={ message } />
                     )) }
-                    { loading && <div className={ styles.thinking }> Thinking... </div> }
+                    { activeThread?.loading && <div className={ styles.thinking }> Thinking... </div> }
                 </div>
             </div>
             <div className={ styles.inputWrapper }>

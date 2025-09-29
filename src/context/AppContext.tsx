@@ -1,26 +1,68 @@
 import { createContext, type ReactNode, useContext, useState } from 'react';
 import { sendMessage } from '../services/chat-service.ts';
-import type { AppContextInterface } from '../interfaces';
-import type { Message } from '../types';
+import type { AppContextInterface, Thread } from '../interfaces';
+import type { Role } from '../types';
 
 const AppContext = createContext<AppContextInterface | undefined>(undefined);
 
 export const AppProvider = ({ children }: { children: ReactNode }): React.JSX.Element => {
-    const [loading, setLoading] = useState(false);
-    const [messages, setMessages] = useState<Message[]>([]);
+    const [threads, setThreads] = useState<Thread[]>([]);
+    const [activeThreadId, setActiveThreadId] = useState<string | null>(null);
 
-    async function onSubmitMessage(userText: string): Promise<void> {
-        setMessages((prev: Message[]) => [...prev, { role: 'user', text: userText }]);
-        setLoading(true);
+    const activeThread = threads.find((thread: Thread) => thread.id === activeThreadId) || null;
+
+    const createThread = (title: string): Thread => {
+        const id = crypto.randomUUID();
+        const newThread: Thread = {
+            id,
+            title,
+            messages: [],
+            loading: false,
+        };
+        setThreads((previous: Thread[]) => [...previous, newThread]);
+        setActiveThreadId(id);
+
+        return newThread;
+    };
+
+    const addMessage = (threadId: string, role: Role, text: string): void => {
+        setThreads((previous: Thread[]) =>
+            previous.map((thread: Thread) =>
+                thread.id === threadId
+                    ? {
+                        ...thread,
+                        loading: role === 'user',
+                        messages: [...thread.messages, { role, text }]
+                      }
+                    : thread
+            )
+        );
+    };
+
+    const onSubmitMessage = async (userText: string): Promise<void> => {
+        let threadId = activeThreadId;
+
+        if (!threadId) {
+            const newThread = createThread('New Chat');
+            threadId = newThread.id;
+            setActiveThreadId(threadId);
+        }
+
+        addMessage(threadId, 'user', userText);
 
         const reply = await sendMessage(userText);
 
-        setMessages((prev: Message[]) => [...prev, { role: 'assistant', text: reply }]);
-        setLoading(false);
-    }
+        addMessage(threadId, 'assistant', reply);
+    };
 
     return (
-        <AppContext.Provider value={ { loading, messages, onSubmitMessage } }>
+        <AppContext.Provider value={ {
+            threads,
+            activeThread,
+            activeThreadId,
+            setActiveThreadId,
+            onSubmitMessage,
+        } }>
             { children }
         </AppContext.Provider>
     );

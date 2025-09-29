@@ -92,6 +92,11 @@
   border-radius: 0.5rem;
   @include mixins.hover-effect('background-color', variables.$color-secondary-hover);
   @include mixins.hover-effect('color', variables.$color-neutral-1);
+
+  &.active {
+    background: variables.$color-secondary-active;
+    color: variables.$color-neutral-1;
+  }
 }
 
 .sidebar span,

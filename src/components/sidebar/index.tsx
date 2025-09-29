@@ -2,11 +2,11 @@ import { MoveLeft, MoveRight, Plus } from 'lucide-react';
 import styles from './sidebar.module.scss';
 import { useAppContext } from '../../context/AppContext.tsx';
 import { useBootstrapTooltip } from '../../hooks/useBootstrapTooltip.ts';
-import type { SidebarProps } from '../../interfaces';
+import type { SidebarProps, Thread } from '../../interfaces';
 
 export default function Sidebar({ isSidebarOpen, sidebarToggle }: SidebarProps): React.JSX.Element {
     
-    const { messages } = useAppContext();
+    const { threads, activeThreadId, setActiveThreadId } = useAppContext();
 
     useBootstrapTooltip([isSidebarOpen]);
 
@@ -15,19 +15,26 @@ export default function Sidebar({ isSidebarOpen, sidebarToggle }: SidebarProps):
     const newChatButton = (): React.JSX.Element => {
         if (isSidebarOpen) {
             return (
-                <div className={ styles.newChat }>
-                    <Plus />
-                    <span>New chat</span>
+                <div className={ styles.newChat } onClick={ addNewChat }>
+                    <Plus /> New chat
                 </div>
             );
         }
 
         return (
-            <div className={ `${styles.newChat} ${styles.iconOnly}` }>
+            <div className={ `${styles.newChat} ${styles.iconOnly}` } onClick={ addNewChat }>
                 <Plus  data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="New chat" />
             </div>
         );
 
+    };
+
+    const addNewChat = (): void => {
+        setActiveThreadId(null);
+    };
+
+    const onChatSelect = (id: string): void => {
+        setActiveThreadId(id);
     };
 
     return (
@@ -45,30 +52,18 @@ export default function Sidebar({ isSidebarOpen, sidebarToggle }: SidebarProps):
 
                 { newChatButton() }
 
-                { isSidebarOpen && messages.length > 0 &&
+                { isSidebarOpen && threads.length > 0 &&
                 <>
                     <h5 className="text-muted">Chats</h5>
                     <ul className={ styles.chatList }>
-                        <li className={ styles.chatItem }>Chat 1</li>
-                        <li className={ styles.chatItem }>Chat 2</li>
-                        <li className={ styles.chatItem }>Chat 3</li>
-                        <li className={ styles.chatItem }>Chat 4</li>
-                        <li className={ styles.chatItem }>Chat 5</li>
-                        <li className={ styles.chatItem }>Chat 6</li>
-                        <li className={ styles.chatItem }>Chat 7</li>
-                        <li className={ styles.chatItem }>Chat 8</li>
-                        <li className={ styles.chatItem }>Chat 9</li>
-                        <li className={ styles.chatItem }>Chat 10</li>
-                        <li className={ styles.chatItem }>Chat 11</li>
-                        <li className={ styles.chatItem }>Chat 12</li>
-                        <li className={ styles.chatItem }>Chat 13</li>
-                        <li className={ styles.chatItem }>Chat 14</li>
-                        <li className={ styles.chatItem }>Chat 15</li>
-                        <li className={ styles.chatItem }>Chat 16</li>
-                        <li className={ styles.chatItem }>Chat 17</li>
-                        <li className={ styles.chatItem }>Chat 18</li>
-                        <li className={ styles.chatItem }>Chat 19</li>
-                        <li className={ styles.chatItem }>Chat 20</li>
+                        { threads.map((thread: Thread, index: number) => (
+                            <li
+                                key={ index }
+                                className={ `${styles.chatItem} ${activeThreadId === thread.id && styles.active}` }
+                                onClick={ () => onChatSelect(thread.id) }>
+                                { thread.title }
+                            </li>
+                        )) }
                     </ul>
                 </> }
             </div>
