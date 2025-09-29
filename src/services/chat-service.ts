@@ -1,37 +1,36 @@
-import axios from 'axios';
+import axios, { type AxiosError } from 'axios';
 
 export async function sendMessage(message: string): Promise<string> {
     try {
-        const res = await axios.post(
-            'https://apifreellm.com/api/chat',
+        const response = await axios.post(
+            '/api/chat',
             { message },
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            }
         );
 
-        const data = res.data as { status: string; response: string; error?: string };
+        const data = response.data as { status: string; response: string; error?: string };
 
         if (data.status === 'success') {
             return data.response!;
         }
 
-        if (data.error?.toLowerCase().includes('limit')) {
-            return 'You have reached the API usage limit. Please try again later.';
-        }
-
-        console.error('API responded with non-success status:', data.status, data.error);
-        return `Error: ${data.error || 'Unknown error'}`;
+        return `API Error: ${data.error || 'Unknown server response'}`;
     } catch (err: unknown) {
-        if (axios.isAxiosError(err)) {
-            if (err.response) {
-                return `API Error: ${err.response.status} ${err.response.statusText}`;
-            } else if (err.request) {
-                return 'Network error: Unable to reach the AI service.';
+        const error = err as AxiosError;
+
+        if (error.response) {
+            const errorData = error.response.data as { error?: string };
+            const status = error.response.status;
+
+            if (status === 429) {
+                return 'You have reached the API usage limit. Please try again later.';
             }
+
+            return `API Error (${status}): ${errorData.error || 'The server returned an error.'}`;
+
+        } else if (error.request) {
+            return 'Network error: Unable to reach the AI service.';
+        } else {
+            return `Unexpected client error: ${error.message}`;
         }
-        return `Unexpected error: ${(err as Error).message}`;
     }
 }
