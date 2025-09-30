@@ -5,7 +5,7 @@ import { useAppContext } from '../../context/AppContext.tsx';
 
 export default function Input (): React.JSX.Element {
 
-    const { loading, onSubmitMessage } = useAppContext();
+    const { activeThread, onSubmitMessage } = useAppContext();
 
     const [input, setInput] = useState('');
     const textareaRef = useRef<HTMLTextAreaElement | null>(null);
@@ -19,10 +19,10 @@ export default function Input (): React.JSX.Element {
     }, [input]);
 
     useEffect(() => {
-        if (!loading) {
+        if (!activeThread?.loading) {
             textareaRef.current?.focus();
         }
-    }, [loading]);
+    }, [activeThread?.loading]);
 
     const handleSend = (): void => {
         if (input.trim()) {
@@ -52,8 +52,8 @@ export default function Input (): React.JSX.Element {
                  placeholder="Ask anything..."
                  rows={ 1 }
                  className={ styles.inputField }
-                 disabled={ loading } />
-            <button onClick={ handleSend } className={ styles.submitButton } disabled={ loading }>
+                 disabled={ activeThread?.loading } />
+            <button onClick={ handleSend } className={ styles.submitButton } disabled={ activeThread?.loading }>
                 <SendHorizontal />
             </button>
         </div>
