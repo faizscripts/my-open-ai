@@ -12,6 +12,12 @@ export default function Sidebar({ isSidebarOpen, sidebarToggle }: SidebarProps):
 
     const ToggleIcon = isSidebarOpen ? MoveLeft : MoveRight;
 
+    const closeSidebarInMobile = (): void => {
+        if (window.innerWidth <= 768 && isSidebarOpen) {
+            sidebarToggle();
+        }
+    };
+
     const newChatButton = (): React.JSX.Element => {
         if (isSidebarOpen) {
             return (
@@ -22,24 +28,33 @@ export default function Sidebar({ isSidebarOpen, sidebarToggle }: SidebarProps):
         }
 
         return (
-            <div className={ `${styles.newChat} ${styles.iconOnly}` } onClick={ addNewChat }>
-                <Plus  data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="New chat" />
-            </div>
+            <Plus
+                className={ `${styles.newChat} ${styles.iconOnly}` }
+                onClick={ addNewChat }
+                aria-label="New chat"
+                data-bs-toggle="tooltip"
+                data-bs-placement="right"
+                data-bs-title="New chat" />
         );
 
     };
 
     const addNewChat = (): void => {
         setActiveThreadId(null);
+        closeSidebarInMobile();
     };
 
     const onChatSelect = (id: string): void => {
         setActiveThreadId(id);
+        closeSidebarInMobile();
     };
 
     return (
         <>
-            { isSidebarOpen && <div className={ styles.backdrop } onClick={ sidebarToggle }></div> }
+            <div
+                className={ `${styles.backdrop} ${isSidebarOpen ? styles.open : styles.closed}` }
+                onClick={ sidebarToggle }>
+            </div>
 
             <div className={ `${styles.wrapper} ${isSidebarOpen ? styles.open : styles.closed}` }>
                 <ToggleIcon
