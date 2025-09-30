@@ -1,29 +1,17 @@
-import { GoogleGenerativeAI } from '@google/generative-ai';
-import * as dotenv from 'dotenv';
+import { getModel, handlerWrapper } from './gemini-client.js';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
-dotenv.config({ quiet: true });
+const model = getModel('gemini-2.5-flash-lite');
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
-const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
-
-export default async function handler(req: VercelRequest, res: VercelResponse): Promise<VercelResponse> {
-    if (req.method !== 'POST') {
-        return res.status(405).json({ status: 'error', error: 'Method Not Allowed' });
-    }
-
+async function chatHandler(req: VercelRequest, res: VercelResponse): Promise<VercelResponse> {
     const userMessage = req.body.message as string;
     if (!userMessage) {
         return res.status(400).json({ status: 'error', error: 'Missing "message".' });
     }
 
-    try {
-        const result = await model.generateContent(userMessage);
-        const replyText = result.response.text();
+    const result = await model.generateContent(userMessage);
 
-        return res.status(200).json({ status: 'success', response: replyText });
-    } catch (err: unknown) {
-        console.error('Gemini API Error:', err);
-        return res.status(500).json({ status: 'error', error: err });
-    }
+    return res.status(200).json({ status: 'success', response: result.response.text() });
 }
+
+export default handlerWrapper('POST', chatHandler);

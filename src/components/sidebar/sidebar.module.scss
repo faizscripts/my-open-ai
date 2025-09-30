@@ -90,6 +90,10 @@
   margin: 0.5rem 0;
   padding: 0.5rem;
   border-radius: 0.5rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
   @include mixins.hover-effect('background-color', variables.$color-secondary-hover);
   @include mixins.hover-effect('color', variables.$color-neutral-1);
 

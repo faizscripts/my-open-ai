@@ -1,5 +1,5 @@
 import { createContext, type ReactNode, useContext, useState } from 'react';
-import { sendMessage } from '../services/chat-service.ts';
+import { generateChatTitle, sendMessage } from '../services/chat-service.ts';
 import type { AppContextInterface, Thread } from '../interfaces';
 import type { Role } from '../types';
 
@@ -25,6 +25,16 @@ export const AppProvider = ({ children }: { children: ReactNode }): React.JSX.El
         return newThread;
     };
 
+    const updateThreadTitle = (threadId: string, title: string): void => {
+        setThreads((previous: Thread[]) =>
+            previous.map((thread: Thread) =>
+                thread.id === threadId
+                    ? { ...thread, title }
+                    : thread
+            )
+        );
+    };
+
     const addMessage = (threadId: string, role: Role, text: string): void => {
         setThreads((previous: Thread[]) =>
             previous.map((thread: Thread) =>
@@ -41,11 +51,12 @@ export const AppProvider = ({ children }: { children: ReactNode }): React.JSX.El
 
     const onSubmitMessage = async (userText: string): Promise<void> => {
         let threadId = activeThreadId;
+        let titlePromise: Promise<string> | null = null;
 
         if (!threadId) {
-            const newThread = createThread('New Chat');
+            const newThread = createThread('Loading title...');
             threadId = newThread.id;
-            setActiveThreadId(threadId);
+            titlePromise = generateChatTitle(userText);
         }
 
         addMessage(threadId, 'user', userText);
@@ -53,6 +64,16 @@ export const AppProvider = ({ children }: { children: ReactNode }): React.JSX.El
         const reply = await sendMessage(userText);
 
         addMessage(threadId, 'assistant', reply);
+
+        if (titlePromise) {
+            try {
+                const threadTitle = await titlePromise;
+                updateThreadTitle(threadId, threadTitle);
+            } catch (error) {
+                console.error('Failed to generate title, keeping default.', error);
+                updateThreadTitle(threadId, 'New Chat');
+            }
+        }
     };
 
     return (
