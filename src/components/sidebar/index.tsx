@@ -54,7 +54,7 @@ export default function Sidebar({ isSidebarOpen, sidebarToggle }: SidebarProps):
 
                 { isSidebarOpen && threads.length > 0 &&
                 <>
-                    <h5 className="text-muted">Chats</h5>
+                    <h5>Chats</h5>
                     <ul className={ styles.chatList }>
                         { threads.map((thread: Thread, index: number) => (
                             <li

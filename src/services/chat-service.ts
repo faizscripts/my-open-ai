@@ -34,3 +34,23 @@ export async function sendMessage(message: string): Promise<string> {
         }
     }
 }
+
+export async function generateChatTitle(message: string): Promise<string> {
+    try {
+        const response = await axios.post(
+            '/api/title',
+            { message },
+        );
+
+        const data = response.data as { status: string; title: string; error?: string };
+
+        if (data.status === 'success') {
+            return data.title!;
+        }
+
+        return 'New Chat';
+    } catch (err: unknown) {
+        console.error('Error generating chat title:', err);
+        return 'New Chat';
+    }
+}
