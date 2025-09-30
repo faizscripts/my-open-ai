@@ -34,18 +34,35 @@
 }
 
 .backdrop {
-  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+
+  @media (min-width: 768px) {
+    display: none;
+  }
 
   @media (max-width: 768px) {
-    display: block;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 999;
+    &.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    &.closed {
+      opacity: 0;
+      pointer-events: none;
+    }
   }
+}
+
+.backdropVisible {
+  opacity: 1;
 }
 
 .toggleButton {
