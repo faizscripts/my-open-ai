@@ -4,7 +4,6 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vercel dev",
     "build": "tsc -b && vite build",
     "lint": "eslint src --ext .ts,.tsx",
     "lint:fix": "eslint src --ext .ts,.tsx --fix",
@@ -12,6 +11,7 @@
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
+    "@vercel/analytics": "^1.5.0",
     "@vercel/node": "^5.3.24",
     "axios": "^1.12.2",
     "dotenv": "^17.2.2",
